@@ -40,7 +40,7 @@ exports.handler = async function (event) {
 
   const mailOptions = {
     from: process.env.SMTP_USER,
-    to: "your-email",
+    to: "jerry.maufler@outlook.com",
     subject: `New Submission`,
     text: `
 
