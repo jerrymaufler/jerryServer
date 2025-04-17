@@ -17,8 +17,8 @@ exports.handler = async function (event) {
 
   const transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST,
-        port: process.env.SMTP_PORT,
-        secure: process.env.SMTP_PORT == 465, // true for 465, false for other ports
+        port: Number(process.env.SMTP_PORT),
+        secure: Number(process.env.SMTP_PORT) === 465, // true for 465, false otherwise
         auth: {
             user: process.env.SMTP_USER,
             pass: process.env.SMTP_PASS,
@@ -29,13 +29,18 @@ exports.handler = async function (event) {
 
 
 
-  transporter.verify((error, success) => {
-    if (error) {
-        console.error("SMTP Server Verification Failed:", error);
-    } else {
-        console.log("SMTP Server is ready to send emails");
-    }
-  });
+ // Optional: SMTP Verification
+  try {
+    await transporter.verify();
+    console.log("SMTP Server is ready to send emails");
+  } catch (error) {
+    console.error("SMTP Server Verification Failed:", error);
+    return {
+      statusCode: 500,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ message: 'SMTP server verification failed.', error: error.message }),
+    };
+  }
 
 
   const mailOptions = {
