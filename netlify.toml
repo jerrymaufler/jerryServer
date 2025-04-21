@@ -1,0 +1,5 @@
+[build]
+  functions = "netlify/functions"
+  publish = "."
+
+# You can omit this redirect block if you're not deploying a frontend
