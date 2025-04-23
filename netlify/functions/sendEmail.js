@@ -61,7 +61,7 @@ Email: ${email}
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
-      body: JSON.stringify({ message: 'Login Failed!' }),
+      body: JSON.stringify({ message: 'Error connecting to server!' }),
     };
   } catch (err) {
     console.error(err);
@@ -70,7 +70,7 @@ Email: ${email}
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
-      body: JSON.stringify({ message: 'Failed to Login.', error: err.message }),
+      body: JSON.stringify({ message: 'Login Failed.', error: err.message }),
     };
   }
 };
